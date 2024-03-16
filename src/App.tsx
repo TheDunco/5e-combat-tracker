@@ -111,7 +111,7 @@ const App = () => {
                   className="accent-pink-500"
                   type="checkbox"
                   checked={creature.action}
-                  onClick={() => setCreatureAction(index, !creature.action)}
+                  onChange={() => setCreatureAction(index, !creature.action)}
                 />
               </span>
               <span>
@@ -120,7 +120,7 @@ const App = () => {
                   className="accent-pink-500"
                   type="checkbox"
                   checked={creature.bonusAction}
-                  onClick={() =>
+                  onChange={() =>
                     setCreatureBonusAction(index, !creature.bonusAction)
                   }
                 />
@@ -131,7 +131,9 @@ const App = () => {
                   className="accent-pink-500"
                   type="checkbox"
                   checked={creature.reaction}
-                  onClick={() => setCreatureReaction(index, !creature.reaction)}
+                  onChange={() =>
+                    setCreatureReaction(index, !creature.reaction)
+                  }
                 />
               </span>
             </p>
