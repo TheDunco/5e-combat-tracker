@@ -12,8 +12,9 @@ const AddCreature = () => {
 
   const methods = useForm<Creature>({
     defaultValues: {
-      hp: 0,
+      hp: 10,
       tempHp: 0,
+      maxHp: 10,
       name: 'Goblin',
     },
   });
