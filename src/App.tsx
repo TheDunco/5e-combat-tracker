@@ -1,15 +1,18 @@
 import { RxDoubleArrowRight, RxReset } from 'react-icons/rx';
 import { AddCreature } from './Components/AddCreature';
 import { CreatureCard } from './Components/CreatureCard';
-import { HealthEditForm } from './Components/HealthEditForm';
+import { EditCreatureForm } from './Components/HealthEditForm';
 import { useStateStore } from './useStateStore';
 
 const App = () => {
-  const { initiative, incrementInitiative, reset } = useStateStore((state) => ({
-    initiative: state.initiative,
-    incrementInitiative: state.incrementInitiative,
-    reset: state.reset,
-  }));
+  const { initiative, incrementInitiative, reset, tooltip, setTooltip } =
+    useStateStore((state) => ({
+      initiative: state.initiative,
+      incrementInitiative: state.incrementInitiative,
+      reset: state.reset,
+      tooltip: state.tooltip,
+      setTooltip: state.setTooltip,
+    }));
 
   return (
     <div className="size-full grid grid-cols-9 flex-col">
@@ -18,6 +21,7 @@ const App = () => {
       </div>
       <div className="col-span-4 m-5 mr-0 pr-5 flex flex-col gap-5 max-h-screen overflow-auto">
         <div className="flex flex-row justify-end gap-5">
+          <p>{tooltip}</p>
           <button
             className="bg-gray-800 rounded-full p-2 px-4 hover:shadow-md hover:shadow-pink-500/50"
             onClick={() => {
@@ -25,12 +29,14 @@ const App = () => {
               const confirmed = confirm('Are you sure you want to reset?');
               if (confirmed) reset();
             }}
+            onMouseOver={() => setTooltip('Reset app state')}
           >
             <RxReset className="scale-x-150 scale-y-125 text-white" />
           </button>
           <button
             className="bg-gray-800 rounded-full p-2 px-4 hover:shadow-md hover:shadow-pink-500/50"
             onClick={() => incrementInitiative()}
+            onMouseOver={() => setTooltip('Increment initiative')}
           >
             <RxDoubleArrowRight className="scale-x-150 scale-y-125 text-white" />
           </button>
@@ -44,7 +50,7 @@ const App = () => {
         ))}
       </div>
       <div className="col-span-3 bg-hero-diagonal-lines-10">
-        <HealthEditForm />
+        <EditCreatureForm />
       </div>
     </div>
   );

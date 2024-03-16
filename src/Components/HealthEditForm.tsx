@@ -6,25 +6,29 @@ import { useStateStore } from '../useStateStore';
 import { CreatureCard } from './CreatureCard';
 import { Input } from './Input';
 
-type HealthForm = Damage & Pick<Creature, 'initiative'>;
+type EditCreatureFormType = Damage & Pick<Creature, 'initiative' | 'tempHp'>;
 
-export const HealthEditForm: React.FC = () => {
+export const EditCreatureForm: React.FC = () => {
   const {
     activeIndex,
     initiative,
     creatureDamage,
     creatureHeal,
     setCreatureInitiative,
+    setTooltip,
+    setCreatureTempHp,
   } = useStateStore((state) => ({
     activeIndex: state.activeIndex,
     initiative: state.initiative,
     creatureDamage: state.creatureDamage,
     creatureHeal: state.creatureHeal,
     setCreatureInitiative: state.setCreatureInitiative,
+    setTooltip: state.setTooltip,
+    setCreatureTempHp: state.setCreatureTempHp,
   }));
 
   const creature = initiative[activeIndex];
-  const methods = useForm<HealthForm>({
+  const methods = useForm<EditCreatureFormType>({
     defaultValues: {
       amount: 1,
       type: DamageTypeObj.Slashing,
@@ -33,13 +37,18 @@ export const HealthEditForm: React.FC = () => {
   });
   if (!creature) return null;
 
-  const { register, handleSubmit } = methods;
+  const { register, handleSubmit, watch } = methods;
+  const amount = watch('amount');
 
-  const handleInitiative: SubmitHandler<HealthForm> = (data) => {
+  const handleInitiative: SubmitHandler<EditCreatureFormType> = (data) => {
     setCreatureInitiative(activeIndex, data.initiative);
   };
 
-  const onSubmitHeal: SubmitHandler<HealthForm> = (data) => {
+  const handleTempHp: SubmitHandler<EditCreatureFormType> = (data) => {
+    setCreatureTempHp(activeIndex, data.tempHp);
+  };
+
+  const onSubmitHeal: SubmitHandler<EditCreatureFormType> = (data) => {
     if (data.amount < 0) {
       return;
     }
@@ -47,7 +56,7 @@ export const HealthEditForm: React.FC = () => {
     handleInitiative(data);
   };
 
-  const onSubmitDamage: SubmitHandler<HealthForm> = (data) => {
+  const onSubmitDamage: SubmitHandler<EditCreatureFormType> = (data) => {
     if (data.amount < 0) {
       return;
     }
@@ -81,18 +90,18 @@ export const HealthEditForm: React.FC = () => {
           <span className="flex-col @xs:flex-row flex gap-0 @xs:gap-2">
             <button
               type="submit"
-              id="heal"
               className="flex flex-row items-center max-w-min pl-4 pr-5 font-bold mt-5 text-white bg-gray-800 hover:bg-gradient-to-r hover:from-emerald-400 hover:to-green-500 rounded-full h-10"
               onClick={handleSubmit(onSubmitHeal)}
+              onMouseOver={() => setTooltip(`Heal the creature ${amount} HP`)}
             >
               <RxArrowUp />
               Heal
             </button>
             <button
               type="submit"
-              id="damage"
               className="flex flex-row items-center max-w-min pl-4 pr-5 font-bold mt-5 text-white bg-gray-800 rounded-full h-10 hover:bg-gradient-to-l hover:from-rose-400 hover:to-red-500"
               onClick={handleSubmit(onSubmitDamage)}
+              onMouseOver={() => setTooltip(`Damage the creature ${amount} HP`)}
             >
               <RxArrowDown />
               Damage
@@ -106,9 +115,22 @@ export const HealthEditForm: React.FC = () => {
             />
             <button
               type="submit"
-              id="damage"
               className="flex flex-row items-center max-w-min pl-4 pr-5 font-bold mt-5 text-white bg-gray-800 rounded-full h-10 hover:bg-gradient-to-l hover:from-rose-400 hover:to-pink-500"
               onClick={handleSubmit(handleInitiative)}
+              onMouseOver={() =>
+                setTooltip(`Set the initiative order of ${creature.name}`)
+              }
+            >
+              Set
+            </button>
+          </span>
+          <span className="flex flex-row gap-2 items-center">
+            <Input {...register('tempHp')} type="number" label="Temp HP" />
+            <button
+              type="submit"
+              className="flex flex-row items-center max-w-min pl-4 pr-5 font-bold mt-5 text-white bg-gray-800 rounded-full h-10 hover:bg-gradient-to-l hover:from-rose-400 hover:to-pink-500"
+              onClick={handleSubmit(handleTempHp)}
+              onMouseOver={() => setTooltip(`Set temp HP for ${creature.name}`)}
             >
               Set
             </button>

@@ -18,6 +18,9 @@ interface UseStateStore {
   setCreatureReaction: (index: number, reaction: boolean) => void;
   creatureDamage: (index: number, damage: Damage) => void;
   creatureHeal: (index: number, health: number) => void;
+  setCreatureTempHp: (index: number, tempHp: number) => void;
+  tooltip: string;
+  setTooltip: (tooltip: string) => void;
 }
 
 export const useStateStore = create<UseStateStore>()(
@@ -149,9 +152,26 @@ export const useStateStore = create<UseStateStore>()(
       },
       setCreatureInitiative: (index: number, initiative: number) => {
         set((state) => {
+          const newInitiative = state.initiative
+            .map((creature, i) => {
+              if (i === index) {
+                return { ...creature, initiative };
+              }
+              return creature;
+            })
+            .sort((a, b) => b.initiative - a.initiative);
+          return { initiative: newInitiative };
+        });
+      },
+      tooltip: 'Welcome!',
+      setTooltip: (tooltip: string) => {
+        set({ tooltip });
+      },
+      setCreatureTempHp: (index: number, tempHp: number) => {
+        set((state) => {
           const newInitiative = state.initiative.map((creature, i) => {
             if (i === index) {
-              return { ...creature, initiative };
+              return { ...creature, tempHp };
             }
             return creature;
           });

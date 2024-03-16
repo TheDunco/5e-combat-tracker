@@ -4,13 +4,13 @@ import { useStateStore } from '../useStateStore';
 import { Input } from './Input';
 
 export const AddCreature = () => {
-  const { addInitiative, setPlayersPreset, loadPlayersPreset } = useStateStore(
-    (state) => ({
+  const { addInitiative, setPlayersPreset, loadPlayersPreset, setTooltip } =
+    useStateStore((state) => ({
       addInitiative: state.addInitiative,
       setPlayersPreset: state.setPlayersPreset,
       loadPlayersPreset: state.loadPlayersPreset,
-    })
-  );
+      setTooltip: state.setTooltip,
+    }));
 
   const methods = useForm<Creature>({
     defaultValues: {
@@ -27,7 +27,8 @@ export const AddCreature = () => {
     },
   });
 
-  const { register, handleSubmit } = methods;
+  const { register, handleSubmit, watch } = methods;
+  const name = watch('name');
 
   const onSubmit: SubmitHandler<Creature> = (data) => {
     addInitiative(data);
@@ -61,11 +62,15 @@ export const AddCreature = () => {
           type="checkbox"
           label={'Enemy?'}
           className="accent-pink-500 place-self-start flex size-8 rounded-full cursor-pointer"
+          onMouseOver={() =>
+            setTooltip('Mark the creature as an enemy (text is dark pink)')
+          }
         />
         <button
           type="submit"
           className="px-4 font-bold mt-5 text-white bg-gray-800 rounded-full h-10 hover:shadow-md hover:shadow-pink-500/50"
           onClick={handleSubmit(onSubmit)}
+          onMouseOver={() => setTooltip(`Add ${name} to initiative order`)}
         >
           Add Creature
         </button>
@@ -74,6 +79,11 @@ export const AddCreature = () => {
           className="px-4 bg-white h-10 rounded-full text-gray-800 border-gray-800 hover:shadow-md hover:shadow-pink-500/50 border-2 font-bold "
           type="button"
           onClick={() => setPlayersPreset()}
+          onMouseOver={() =>
+            setTooltip(
+              'Save the current initiative order as a preset. Useful for saving players'
+            )
+          }
         >
           Save as Players Preset
         </button>
@@ -81,6 +91,7 @@ export const AddCreature = () => {
           className="px-4 bg-white h-10 rounded-full text-gray-800 border-gray-800 hover:shadow-md hover:shadow-pink-500/50 border-2 font-bold "
           type="button"
           onClick={() => loadPlayersPreset()}
+          onMouseOver={() => setTooltip('Load the players preset')}
         >
           Load Players Preset
         </button>

@@ -41,11 +41,13 @@ export const CreatureCard: React.FC<{
     setCreatureAction,
     setCreatureBonusAction,
     setCreatureReaction,
+    setTooltip,
   } = useStateStore((state) => ({
     activeIndex: state.activeIndex,
     setCreatureAction: state.setCreatureAction,
     setCreatureBonusAction: state.setCreatureBonusAction,
     setCreatureReaction: state.setCreatureReaction,
+    setTooltip: state.setTooltip,
   }));
   const creatureTotalHealth = +creature.hp + +creature.tempHp;
   const healthPercent = Math.round(
@@ -83,7 +85,12 @@ export const CreatureCard: React.FC<{
           <RxCrosshair2 /> {creature.ac}
         </p>
         <p className="flex flex-col @sm:flex-col @sm:gap-2 @md:flex-row @md:gap-5">
-          <span className="flex flex-row items-center gap-1 cursor-pointer">
+          <span
+            onMouseOver={() =>
+              setTooltip("Use the creature's action for this round")
+            }
+            className="flex flex-row items-center gap-1 cursor-pointer"
+          >
             <label htmlFor={actionId} className="cursor-pointer">
               Action{' '}
             </label>
@@ -96,7 +103,12 @@ export const CreatureCard: React.FC<{
               disabled={index !== activeIndex}
             />
           </span>
-          <span className="flex flex-row items-center gap-1 cursor-pointer">
+          <span
+            onMouseOver={() =>
+              setTooltip("Use the creature's bonus action for this round")
+            }
+            className="flex flex-row items-center gap-1 cursor-pointer"
+          >
             <label htmlFor={bonusActionId} className="cursor-pointer">
               Bonus Action{' '}
             </label>
@@ -111,7 +123,12 @@ export const CreatureCard: React.FC<{
               disabled={index !== activeIndex}
             />
           </span>
-          <span className="flex flex-row items-center gap-1 className='cursor-pointer'">
+          <span
+            onMouseOver={() =>
+              setTooltip("Use the creature's reaction for this round")
+            }
+            className="flex flex-row items-center gap-1 className='cursor-pointer'"
+          >
             <label htmlFor={reactionId}>Reaction </label>
             <input
               id={reactionId}
