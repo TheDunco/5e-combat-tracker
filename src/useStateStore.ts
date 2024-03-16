@@ -26,7 +26,11 @@ export const useStateStore = create<UseStateStore>()(
       },
       addInitiative: (creature: Creature) => {
         set((state) => {
-          return { initiative: [...state.initiative, creature] };
+          return {
+            initiative: [...state.initiative, creature].sort(
+              (a, b) => b.initiative - a.initiative
+            ),
+          };
         });
       },
       reset: () => {
@@ -36,14 +40,16 @@ export const useStateStore = create<UseStateStore>()(
         set((state) => {
           const newActiveIndex = state.activeIndex + 1;
           if (newActiveIndex >= state.initiative.length) {
-            const newInitiative = state.initiative.map((creature) => {
-              return {
-                ...creature,
-                action: false,
-                bonusAction: false,
-                reaction: false,
-              };
-            });
+            const newInitiative = state.initiative
+              .map((creature) => {
+                return {
+                  ...creature,
+                  action: false,
+                  bonusAction: false,
+                  reaction: false,
+                };
+              })
+              .sort((a, b) => b.initiative - a.initiative);
             return { activeIndex: 0, initiative: newInitiative };
           }
           return { activeIndex: newActiveIndex };
@@ -52,7 +58,7 @@ export const useStateStore = create<UseStateStore>()(
       setCreatureAction: (index: number, action: boolean) => {
         set((state) => {
           const newInitiative = state.initiative.map((creature, i) => {
-            if (i === index) {
+            if (i === index && index === state.activeIndex) {
               return { ...creature, action };
             }
             return creature;
@@ -63,7 +69,7 @@ export const useStateStore = create<UseStateStore>()(
       setCreatureBonusAction: (index: number, bonusAction: boolean) => {
         set((state) => {
           const newInitiative = state.initiative.map((creature, i) => {
-            if (i === index) {
+            if (i === index && index === state.activeIndex) {
               return { ...creature, bonusAction };
             }
             return creature;

@@ -30,4 +30,7 @@ export interface Creature {
   action: boolean;
   bonusAction: boolean;
   reaction: boolean;
+  enemy: boolean;
+  initiative: number;
+  ac: number;
 }
