@@ -156,7 +156,7 @@ export const CreatureCard: React.FC<{
             />
           </span>
         </p>
-        {!sidebar && creature?.immunities.length > 0 ? (
+        {!sidebar && creature?.immunities?.length > 0 ? (
           <div className="flex flex-row items-center mt-3 gap-2">
             <p>Immunities:</p>
             <span className="flex flex-row flex-wrap gap-0.5 items-center max-w-full overflow-visible">
@@ -171,7 +171,7 @@ export const CreatureCard: React.FC<{
             </span>
           </div>
         ) : null}
-        {!sidebar && creature?.resistances.length > 0 ? (
+        {!sidebar && creature?.resistances?.length > 0 ? (
           <div className="flex flex-row items-center mt-3 gap-2">
             <p>Resistances:</p>
             <span className="flex flex-row flex-wrap gap-0.5 items-center max-w-full overflow-visible">
