@@ -80,13 +80,20 @@ export const EditCreatureForm: React.FC = () => {
               type="number"
               label={'HP'}
             />
-            <Input
-              {...register('type', {
-                required: 'Must provide damage amount',
-              })}
-              type="text"
-              label={'Type'}
-            />
+            <span className="flex items-center mt-7">
+              <select
+                {...register('type', {
+                  required: 'Must provide damage amount',
+                })}
+                className="bg-gray-50 ring-none border-2 h-12 focus:border-gray-800 outline-none border-gray-300 text-gray-900 rounded-lg w-full p-2.5"
+              >
+                {Object.keys(DamageTypeObj).map((key) => (
+                  <option key={key} value={key}>
+                    {key}
+                  </option>
+                ))}
+              </select>
+            </span>
           </span>
           <span className="flex-col @xs:flex-row flex gap-0 @xs:gap-2">
             <button

@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { Form, FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { Creature } from '../types';
+import { MultiSelect } from 'react-multi-select-component';
+import { Creature, DamageTypeObj, DamageTypeSelectOptions } from '../types';
 import { useStateStore } from '../useStateStore';
 import { Input } from './Input';
 
@@ -31,8 +33,19 @@ export const AddCreatureForm = () => {
   const name = watch('name');
 
   const onSubmit: SubmitHandler<Creature> = (data) => {
-    addInitiative(data);
+    addInitiative({
+      ...data,
+      immunities: selectedImmunities.map((i) => i.value),
+      resistances: selectedResistances.map((i) => i.value),
+    });
   };
+
+  const [selectedResistances, setSelectedResistances] = useState(
+    [] as Array<DamageTypeSelectOptions>
+  );
+  const [selectedImmunities, setSelectedImmunities] = useState(
+    [] as Array<DamageTypeSelectOptions>
+  );
 
   return (
     <FormProvider {...methods}>
@@ -65,6 +78,27 @@ export const AddCreatureForm = () => {
           onMouseOver={() =>
             setTooltip('Mark the creature as an enemy (text is dark pink)')
           }
+        />
+        <label className="flex w-full flex-start -mb-3">Immunities</label>
+        <MultiSelect
+          options={Object.keys(DamageTypeObj).map((key) => ({
+            label: key,
+            value: key,
+          }))}
+          value={selectedImmunities}
+          onChange={setSelectedImmunities}
+          labelledBy="Immunities"
+        />
+        <label className="flex w-full flex-start -mb-3">Resistances</label>
+        <MultiSelect
+          options={Object.keys(DamageTypeObj).map((key) => ({
+            label: key,
+            value: key,
+          }))}
+          value={selectedResistances}
+          onChange={setSelectedResistances}
+          labelledBy="Resistances"
+          className="outline-none"
         />
         <button
           type="submit"

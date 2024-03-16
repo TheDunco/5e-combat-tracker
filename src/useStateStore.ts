@@ -111,9 +111,12 @@ export const useStateStore = create<UseStateStore>()(
         set((state) => {
           const newInitiative = state.initiative.map((creature, i) => {
             if (i === index) {
-              //   if (creature.resistances.includes(damage.type)) {
-              //     damage.amount = Math.floor(damage.amount / 2);
-              //   }
+              if (creature?.immunities.includes(damage.type)) {
+                return creature;
+              }
+              if (creature?.resistances.includes(damage.type)) {
+                damage.amount = Math.floor(damage.amount / 2);
+              }
               // roll off tempHp first
               if (creature.tempHp > 0) {
                 if (creature.tempHp - damage.amount <= 0) {

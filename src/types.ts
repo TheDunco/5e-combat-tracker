@@ -16,9 +16,16 @@ export const DamageTypeObj = {
 
 export type DamageType = typeof DamageTypeObj;
 
+export type SingleDamageType = DamageType[keyof DamageType];
+
 export interface Damage {
   amount: number;
-  type: DamageType[keyof DamageType];
+  type: SingleDamageType;
+}
+
+export interface DamageTypeSelectOptions {
+  value: SingleDamageType;
+  label: SingleDamageType;
 }
 
 export interface Creature {
@@ -26,7 +33,8 @@ export interface Creature {
   hp: number;
   maxHp: number;
   tempHp: number;
-  resistances: Array<DamageType[keyof DamageType]>;
+  resistances: Array<SingleDamageType>;
+  immunities: Array<SingleDamageType>;
   action: boolean;
   bonusAction: boolean;
   reaction: boolean;

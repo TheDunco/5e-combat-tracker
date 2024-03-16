@@ -7,7 +7,7 @@ import { useStateStore } from '../useStateStore';
 const healthPercentToDescriptor = (percent: number): string => {
   switch (true) {
     case percent === 100:
-      return 'Mint';
+      return 'Full Health';
     case percent < 100 && percent >= 90:
       return 'Healthy';
     case percent < 90 && percent >= 80:
@@ -156,6 +156,36 @@ export const CreatureCard: React.FC<{
             />
           </span>
         </p>
+        {!sidebar && creature?.immunities.length > 0 ? (
+          <div className="flex flex-row items-center mt-3 gap-2">
+            <p>Immunities:</p>
+            <span className="flex flex-row flex-wrap gap-0.5 items-center max-w-full overflow-visible">
+              {creature?.immunities.map((immunity, i) => (
+                <p
+                  key={i}
+                  className="text-xs italic rounded-full px-2 py-0.5 bg-gray-800 text-white"
+                >
+                  {immunity}
+                </p>
+              ))}
+            </span>
+          </div>
+        ) : null}
+        {!sidebar && creature?.resistances.length > 0 ? (
+          <div className="flex flex-row items-center mt-3 gap-2">
+            <p>Resistances:</p>
+            <span className="flex flex-row flex-wrap gap-0.5 items-center max-w-full overflow-visible">
+              {creature?.resistances.map((resistance, i) => (
+                <p
+                  key={i}
+                  className="text-xs italic rounded-full px-2 py-0.5 bg-gray-800 text-white"
+                >
+                  {resistance}
+                </p>
+              ))}
+            </span>
+          </div>
+        ) : null}
       </div>
     </div>
   );
