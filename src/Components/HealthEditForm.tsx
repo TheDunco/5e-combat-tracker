@@ -54,7 +54,6 @@ export const EditCreatureForm: React.FC = () => {
       return;
     }
     creatureHeal(activeIndex, data.amount);
-    handleInitiative(data);
   };
 
   const onSubmitDamage: SubmitHandler<EditCreatureFormType> = (data) => {
@@ -62,7 +61,6 @@ export const EditCreatureForm: React.FC = () => {
       return;
     }
     creatureDamage(activeIndex, data);
-    handleInitiative(data);
   };
 
   return (
