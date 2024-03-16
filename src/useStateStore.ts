@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { Creature } from './types';
+import { Creature, Damage } from './types';
 
 interface UseStateStore {
   initiative: Array<Creature>;
@@ -12,12 +12,13 @@ interface UseStateStore {
   setCreatureAction: (index: number, action: boolean) => void;
   setCreatureBonusAction: (index: number, bonusAction: boolean) => void;
   setCreatureReaction: (index: number, reaction: boolean) => void;
+  creatureDamage: (index: number, damage: Damage) => void;
 }
 
 export const useStateStore = create<UseStateStore>()(
   persist(
     (set) => ({
-      initiative: [],
+      initiative: [] as Creature[],
       activeIndex: 0,
       setActiveIndex: (index: number) => {
         set({ activeIndex: index });
@@ -74,6 +75,17 @@ export const useStateStore = create<UseStateStore>()(
           const newInitiative = state.initiative.map((creature, i) => {
             if (i === index) {
               return { ...creature, reaction };
+            }
+            return creature;
+          });
+          return { initiative: newInitiative };
+        });
+      },
+      creatureDamage: (index: number, damage: Damage) => {
+        set((state) => {
+          const newInitiative = state.initiative.map((creature, i) => {
+            if (i === index) {
+              return { ...creature, hp: creature.hp - damage.amount };
             }
             return creature;
           });

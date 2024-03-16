@@ -85,8 +85,11 @@ const App = () => {
       </div>
       <div className="col-span-3 mt-5 ml-5 flex flex-col gap-5 max-h-screen overflow-auto">
         <div className="flex flex-row justify-end">
-          <button onClick={() => incrementInitiative()}>
-            <RxDoubleArrowRight className="scale-x-150 scale-y-125 hover:animate-spin text-pink-500" />
+          <button
+            className="bg-gray-800 rounded-full p-2 px-4 hover:shadow-md hover:shadow-pink-500/50"
+            onClick={() => incrementInitiative()}
+          >
+            <RxDoubleArrowRight className="scale-x-150 scale-y-125 text-white" />
           </button>
         </div>
         {initiative.map((creature, index) => (
