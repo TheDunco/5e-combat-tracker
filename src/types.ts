@@ -24,6 +24,7 @@ export interface Damage {
 export interface Creature {
   name: string;
   hp: number;
+  maxHp: number;
   tempHp: number;
   resistances: Array<DamageType>;
 }
