@@ -31,10 +31,11 @@ const healthPercentToDescriptor = (percent: number): string => {
   }
 };
 
-export const CreatureCard: React.FC<{ creature: Creature; index: number }> = ({
-  creature,
-  index,
-}) => {
+export const CreatureCard: React.FC<{
+  creature: Creature;
+  index: number;
+  sidebar?: boolean;
+}> = ({ creature, index, sidebar }) => {
   const {
     activeIndex,
     setCreatureAction,
@@ -59,7 +60,7 @@ export const CreatureCard: React.FC<{ creature: Creature; index: number }> = ({
         className={clsx(
           'bg-gray-100 hover:bg-hero-texture-30 rounded-lg px-3 py-4 drop-shadow-md flex flex-col gap-1',
           {
-            '@sm:border-2 border-pink-500': index === activeIndex,
+            'border-2 border-pink-500': index === activeIndex && !sidebar,
             'bg-hero-skulls-10 hover:bg-hero-skulls-pink-30': creature.hp <= 0,
             'text-pink-950': creature.enemy,
           }

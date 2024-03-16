@@ -4,11 +4,15 @@ import { Creature, Damage } from './types';
 
 interface UseStateStore {
   initiative: Array<Creature>;
+  playersPreset: Array<Creature>;
+  setPlayersPreset: () => void;
+  loadPlayersPreset: () => void;
   activeIndex: number;
   setActiveIndex: (index: number) => void;
   addInitiative: (creature: Creature) => void;
   reset: () => void;
   incrementInitiative: () => void;
+  setCreatureInitiative: (index: number, initiative: number) => void;
   setCreatureAction: (index: number, action: boolean) => void;
   setCreatureBonusAction: (index: number, bonusAction: boolean) => void;
   setCreatureReaction: (index: number, reaction: boolean) => void;
@@ -20,6 +24,17 @@ export const useStateStore = create<UseStateStore>()(
   persist(
     (set) => ({
       initiative: [] as Creature[],
+      playersPreset: [] as Creature[],
+      setPlayersPreset: () => {
+        set((state) => ({
+          playersPreset: state.initiative,
+        }));
+      },
+      loadPlayersPreset: () => {
+        set((state) => ({
+          initiative: state.playersPreset,
+        }));
+      },
       activeIndex: 0,
       setActiveIndex: (index: number) => {
         set({ activeIndex: index });
@@ -126,6 +141,17 @@ export const useStateStore = create<UseStateStore>()(
                 return { ...creature, hp: creature.maxHp };
               }
               return { ...creature, hp: +creature.hp + +health };
+            }
+            return creature;
+          });
+          return { initiative: newInitiative };
+        });
+      },
+      setCreatureInitiative: (index: number, initiative: number) => {
+        set((state) => {
+          const newInitiative = state.initiative.map((creature, i) => {
+            if (i === index) {
+              return { ...creature, initiative };
             }
             return creature;
           });

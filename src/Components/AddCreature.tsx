@@ -4,10 +4,13 @@ import { useStateStore } from '../useStateStore';
 import { Input } from './Input';
 
 export const AddCreature = () => {
-  const { addInitiative, reset } = useStateStore((state) => ({
-    addInitiative: state.addInitiative,
-    reset: state.reset,
-  }));
+  const { addInitiative, setPlayersPreset, loadPlayersPreset } = useStateStore(
+    (state) => ({
+      addInitiative: state.addInitiative,
+      setPlayersPreset: state.setPlayersPreset,
+      loadPlayersPreset: state.loadPlayersPreset,
+    })
+  );
 
   const methods = useForm<Creature>({
     defaultValues: {
@@ -66,16 +69,20 @@ export const AddCreature = () => {
         >
           Add Creature
         </button>
+        <hr className="border-gray-800" />
         <button
-          className="px-4 bg-white h-10 rounded-full max-w-32 text-gray-800 border-gray-800 hover:shadow-md hover:shadow-pink-500/50 border-2 font-bold "
+          className="px-4 bg-white h-10 rounded-full text-gray-800 border-gray-800 hover:shadow-md hover:shadow-pink-500/50 border-2 font-bold "
           type="button"
-          onClick={() => {
-            // eslint-disable-next-line no-restricted-globals
-            const confirmed = confirm('Are you sure you want to reset?');
-            if (confirmed) reset();
-          }}
+          onClick={() => setPlayersPreset()}
         >
-          Reset
+          Save as Players Preset
+        </button>
+        <button
+          className="px-4 bg-white h-10 rounded-full text-gray-800 border-gray-800 hover:shadow-md hover:shadow-pink-500/50 border-2 font-bold "
+          type="button"
+          onClick={() => loadPlayersPreset()}
+        >
+          Load Players Preset
         </button>
       </Form>
     </FormProvider>
