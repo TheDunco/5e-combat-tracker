@@ -23,7 +23,7 @@ const App = () => {
         <div className="flex flex-row justify-end gap-5">
           <p>{tooltip}</p>
           <button
-            className="bg-gray-800 rounded-full p-2 px-4 hover:shadow-md hover:shadow-pink-500/50"
+            className="bg-gray-800 rounded-full h-8 p-2 px-4 hover:shadow-md hover:shadow-pink-500/50"
             onClick={() => {
               // eslint-disable-next-line no-restricted-globals
               const confirmed = confirm('Are you sure you want to reset?');
@@ -34,7 +34,7 @@ const App = () => {
             <RxReset className="scale-x-150 scale-y-125 text-white" />
           </button>
           <button
-            className="bg-gray-800 rounded-full p-2 px-4 hover:shadow-md hover:shadow-pink-500/50"
+            className="bg-gray-800 rounded-full h-8 p-2 px-4 hover:shadow-md hover:shadow-pink-500/50"
             onClick={() => incrementInitiative()}
             onMouseOver={() => setTooltip('Increment initiative')}
           >
