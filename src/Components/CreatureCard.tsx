@@ -56,7 +56,6 @@ export const CreatureCard: React.FC<{ creature: Creature; index: number }> = ({
   return (
     <div className="@container">
       <div
-        key={`${creature.name}${creature.initiative}`}
         className={clsx(
           'bg-gray-100 hover:bg-hero-texture-30 rounded-lg px-3 py-4 drop-shadow-md flex flex-col gap-1',
           {

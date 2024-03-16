@@ -10,7 +10,7 @@ export const Input = React.forwardRef(
       <div className="flex flex-col text-left">
         <label
           htmlFor={label}
-          className="block mt-2 text-sm font-medium text-gray-900"
+          className="block mt-2 text-sm font-medium text-gray-900 cursor-pointer"
         >
           {label}
         </label>

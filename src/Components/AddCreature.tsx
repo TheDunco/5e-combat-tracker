@@ -38,22 +38,26 @@ export const AddCreature = () => {
           label={'Name'}
           type="text"
         />
-        <Input
-          {...register('initiative', {
-            required: 'Must provide initiative order',
-          })}
-          type="number"
-          label={'Initiative'}
-        />
-        <Input {...register('hp')} label={'HP'} type="number" />
-        <Input {...register('maxHp')} type="number" label={'Max HP'} />
-        <Input {...register('tempHp')} type="number" label={'Temp HP'} />
-        <Input {...register('ac')} type="number" label={'AC'} />
+        <span className="flex flex-row gap-2">
+          <Input
+            {...register('initiative', {
+              required: 'Must provide initiative order',
+            })}
+            type="number"
+            label={'Initiative'}
+          />
+          <Input {...register('ac')} type="number" label={'AC'} />
+        </span>
+        <span className="flex flex-row gap-2">
+          <Input {...register('hp')} label={'HP'} type="number" />
+          <Input {...register('tempHp')} type="number" label={'Temp HP'} />
+          <Input {...register('maxHp')} type="number" label={'Max HP'} />
+        </span>
         <Input
           {...register('enemy')}
           type="checkbox"
           label={'Enemy?'}
-          className="accent-pink-500 place-self-start flex size-8 rounded-full"
+          className="accent-pink-500 place-self-start flex size-8 rounded-full cursor-pointer"
         />
         <button
           type="submit"

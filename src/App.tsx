@@ -25,7 +25,11 @@ const App = () => {
           </button>
         </div>
         {initiative.map((creature, index) => (
-          <CreatureCard creature={creature} index={index} />
+          <CreatureCard
+            key={`${creature.name}${creature.initiative}${index}`}
+            creature={creature}
+            index={index}
+          />
         ))}
       </div>
       <div className="col-span-2 bg-hero-diagonal-lines-10">
