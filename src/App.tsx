@@ -98,13 +98,17 @@ const App = () => {
             className={clsx(
               {
                 'border border-pink-500': index === activeIndex,
+                'bg-hero-hideout-50 hover:bg-hero-hideout-pink-50':
+                  creature.hp <= 0,
               },
-              'bg-gray-100 hover:bg-hero-texture-30 rounded-lg px-3 py-4 drop-shadow-md'
+              'bg-gray-100 hover:bg-hero-texture-30 rounded-lg px-3 py-4 drop-shadow-md flex flex-col gap-1'
             )}
           >
             <h2 className="font-bold text-lg">{creature.name}</h2>
             <p>
-              HP: {creature.hp}/{creature.maxHp}
+              HP: {creature.hp}/{creature.maxHp} (
+              {(creature.hp / creature.maxHp) * 100}
+              %)
             </p>
             <p>Temp HP: {creature.tempHp}</p>
             <p className="flex flex-row gap-5">

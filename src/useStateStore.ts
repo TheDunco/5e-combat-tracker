@@ -13,6 +13,7 @@ interface UseStateStore {
   setCreatureBonusAction: (index: number, bonusAction: boolean) => void;
   setCreatureReaction: (index: number, reaction: boolean) => void;
   creatureDamage: (index: number, damage: Damage) => void;
+  creatureHeal: (index: number, health: number) => void;
 }
 
 export const useStateStore = create<UseStateStore>()(
@@ -85,7 +86,39 @@ export const useStateStore = create<UseStateStore>()(
         set((state) => {
           const newInitiative = state.initiative.map((creature, i) => {
             if (i === index) {
+              if (creature.resistances.includes(damage.type)) {
+                damage.amount = Math.floor(damage.amount / 2);
+              }
+              // roll off tempHp first
+              if (creature.tempHp > 0) {
+                if (creature.tempHp - damage.amount <= 0) {
+                  damage.amount -= creature.tempHp;
+                  return {
+                    ...creature,
+                    tempHp: 0,
+                    hp: creature.hp - damage.amount,
+                  };
+                }
+                return { ...creature, tempHp: creature.tempHp - damage.amount };
+              }
+              if (creature.hp - damage.amount <= 0) {
+                return { ...creature, hp: 0 };
+              }
               return { ...creature, hp: creature.hp - damage.amount };
+            }
+            return creature;
+          });
+          return { initiative: newInitiative };
+        });
+      },
+      creatureHeal: (index: number, health: number) => {
+        set((state) => {
+          const newInitiative = state.initiative.map((creature, i) => {
+            if (i === index) {
+              if (creature.hp + health >= creature.maxHp) {
+                return { ...creature, hp: creature.maxHp };
+              }
+              return { ...creature, hp: creature.hp + health };
             }
             return creature;
           });
