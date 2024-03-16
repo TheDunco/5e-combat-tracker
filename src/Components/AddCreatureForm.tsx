@@ -6,13 +6,21 @@ import { useStateStore } from '../useStateStore';
 import { Input } from './Input';
 
 export const AddCreatureForm = () => {
-  const { addInitiative, setPlayersPreset, loadPlayersPreset, setTooltip } =
-    useStateStore((state) => ({
-      addInitiative: state.addInitiative,
-      setPlayersPreset: state.setPlayersPreset,
-      loadPlayersPreset: state.loadPlayersPreset,
-      setTooltip: state.setTooltip,
-    }));
+  const {
+    addInitiative,
+    setPlayersPreset,
+    loadPlayersPreset,
+    setTooltip,
+    initiative,
+    activeIndex,
+  } = useStateStore((state) => ({
+    addInitiative: state.addInitiative,
+    setPlayersPreset: state.setPlayersPreset,
+    loadPlayersPreset: state.loadPlayersPreset,
+    setTooltip: state.setTooltip,
+    initiative: state.initiative,
+    activeIndex: state.activeIndex,
+  }));
 
   const methods = useForm<Creature>({
     defaultValues: {
@@ -29,8 +37,10 @@ export const AddCreatureForm = () => {
     },
   });
 
-  const { register, handleSubmit, watch } = methods;
+  const { register, handleSubmit, watch, reset } = methods;
   const name = watch('name');
+
+  const character = initiative[activeIndex];
 
   const onSubmit: SubmitHandler<Creature> = (data) => {
     addInitiative({
@@ -47,9 +57,39 @@ export const AddCreatureForm = () => {
     [] as Array<DamageTypeSelectOptions>
   );
 
+  const loadInCharacter = () => {
+    if (character) {
+      reset({ ...character });
+      setSelectedResistances(
+        character?.resistances?.map((resistance) => ({
+          label: resistance,
+          value: resistance,
+        })) || []
+      );
+      setSelectedImmunities(
+        character?.immunities?.map((immunity) => ({
+          label: immunity,
+          value: immunity,
+        })) || []
+      );
+    }
+  };
+
   return (
     <FormProvider {...methods}>
       <Form className="p-3 gap-4 flex flex-col">
+        <button
+          className="px-4 bg-white h-10 rounded-full text-gray-800 border-gray-800 hover:shadow-md hover:shadow-pink-500/50 border-2 font-bold "
+          type="button"
+          onClick={() => loadInCharacter()}
+          onMouseOver={() =>
+            setTooltip(
+              'Load the current character into the form for editing. Useful for updating characters in the initiative order if you delete the previous one'
+            )
+          }
+        >
+          Load Current Character
+        </button>
         <Input
           {...register('name', { required: 'Name required' })}
           label={'Name'}
