@@ -27,7 +27,6 @@ export const AddCreature = () => {
   const { register, handleSubmit } = methods;
 
   const onSubmit: SubmitHandler<Creature> = (data) => {
-    console.log(data);
     addInitiative(data);
   };
 
@@ -58,13 +57,13 @@ export const AddCreature = () => {
         />
         <button
           type="submit"
-          className="px-3 font-bold mt-5 max-w-32 text-white bg-gray-800 rounded-full h-10 hover:shadow-md hover:shadow-pink-500/50"
+          className="px-4 font-bold mt-5 text-white bg-gray-800 rounded-full h-10 hover:shadow-md hover:shadow-pink-500/50"
           onClick={handleSubmit(onSubmit)}
         >
           Add Creature
         </button>
         <button
-          className="bg-white h-10 rounded-full max-w-32 text-gray-800 border-gray-800 hover:shadow-md hover:shadow-pink-500/50 border-2 font-bold "
+          className="px-4 bg-white h-10 rounded-full max-w-32 text-gray-800 border-gray-800 hover:shadow-md hover:shadow-pink-500/50 border-2 font-bold "
           type="button"
           onClick={() => {
             // eslint-disable-next-line no-restricted-globals

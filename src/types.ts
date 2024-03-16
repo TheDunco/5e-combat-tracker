@@ -18,7 +18,7 @@ export type DamageType = typeof DamageTypeObj;
 
 export interface Damage {
   amount: number;
-  type: DamageType;
+  type: DamageType[keyof DamageType];
 }
 
 export interface Creature {
@@ -26,7 +26,7 @@ export interface Creature {
   hp: number;
   maxHp: number;
   tempHp: number;
-  resistances: Array<DamageType>;
+  resistances: Array<DamageType[keyof DamageType]>;
   action: boolean;
   bonusAction: boolean;
   reaction: boolean;

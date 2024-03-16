@@ -2,6 +2,7 @@
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   plugins: [
+    require('@tailwindcss/container-queries'),
     require('tailwind-heropatterns')({
       // as per tailwind docs you can pass variants
       variants: [],
@@ -16,6 +17,7 @@ module.exports = {
         default: '#9C92AC',
         pink: '#EC489A',
         gray: '#D1D5DB',
+        dark: '#1F2937',
       },
 
       // The foreground opacity

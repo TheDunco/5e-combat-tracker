@@ -18,7 +18,7 @@ export const Input = React.forwardRef(
           id={label}
           type="text"
           ref={ref}
-          className="bg-gray-50 ring-none border-2 focus:border-gray-800 outline-none border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+          className="bg-gray-50 ring-none border-2 focus:border-gray-800 outline-none border-gray-300 text-gray-900 rounded-lg block w-full p-2.5"
           {...props}
           onFocus={(e) => e.target.select()}
           autoComplete="off"
