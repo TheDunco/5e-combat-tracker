@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { useId } from 'react';
-import { RxCrosshair2, RxHeart } from 'react-icons/rx';
+import { RxCross1, RxCrosshair2, RxHeart } from 'react-icons/rx';
 import { Creature } from '../types';
 import { useStateStore } from '../useStateStore';
 
@@ -42,12 +42,14 @@ export const CreatureCard: React.FC<{
     setCreatureBonusAction,
     setCreatureReaction,
     setTooltip,
+    removeCreature,
   } = useStateStore((state) => ({
     activeIndex: state.activeIndex,
     setCreatureAction: state.setCreatureAction,
     setCreatureBonusAction: state.setCreatureBonusAction,
     setCreatureReaction: state.setCreatureReaction,
     setTooltip: state.setTooltip,
+    removeCreature: state.removeCreature,
   }));
   const creatureTotalHealth = +creature.hp + +creature.tempHp;
   const healthPercent = Math.round(
@@ -68,6 +70,21 @@ export const CreatureCard: React.FC<{
           }
         )}
       >
+        <button
+          onMouseOver={() =>
+            setTooltip(`Remove ${creature.name} from initiative`)
+          }
+          onClick={() => {
+            // eslint-disable-next-line no-restricted-globals
+            const confirmed = confirm(
+              `Are you sure you want to remove ${creature.name} from initiative?`
+            );
+            if (confirmed) removeCreature(index);
+          }}
+          className="absolute top-1.5 left-[calc(100%-2rem)] hover:bg-gray-800 hover:shadow-md hover:shadow-pink-500/50 group rounded-full p-1"
+        >
+          <RxCross1 className="text-pink-500 group-hover:text-white" />
+        </button>
         <h2 className="font-bold text-lg">
           [{creature.initiative}] {creature.name}{' '}
         </h2>

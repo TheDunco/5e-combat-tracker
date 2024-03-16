@@ -1,5 +1,5 @@
 import { RxDoubleArrowRight, RxReset } from 'react-icons/rx';
-import { AddCreature } from './Components/AddCreature';
+import { AddCreatureForm } from './Components/AddCreatureForm';
 import { CreatureCard } from './Components/CreatureCard';
 import { EditCreatureForm } from './Components/HealthEditForm';
 import { useStateStore } from './useStateStore';
@@ -17,7 +17,7 @@ const App = () => {
   return (
     <div className="size-full grid grid-cols-9 flex-col">
       <div className="max-w-md col-span-2 rounded bg-white shadow-black/20 shadow-sm w-full text-center">
-        <AddCreature />
+        <AddCreatureForm />
       </div>
       <div className="col-span-4 m-5 mr-0 pr-5 flex flex-col gap-5 max-h-screen overflow-auto">
         <div className="flex flex-row justify-end gap-5">

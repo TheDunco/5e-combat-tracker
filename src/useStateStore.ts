@@ -21,6 +21,7 @@ interface UseStateStore {
   setCreatureTempHp: (index: number, tempHp: number) => void;
   tooltip: string;
   setTooltip: (tooltip: string) => void;
+  removeCreature: (index: number) => void;
 }
 
 export const useStateStore = create<UseStateStore>()(
@@ -175,6 +176,12 @@ export const useStateStore = create<UseStateStore>()(
             }
             return creature;
           });
+          return { initiative: newInitiative };
+        });
+      },
+      removeCreature: (index: number) => {
+        set((state) => {
+          const newInitiative = state.initiative.filter((_, i) => i !== index);
           return { initiative: newInitiative };
         });
       },

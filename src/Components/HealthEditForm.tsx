@@ -33,6 +33,7 @@ export const EditCreatureForm: React.FC = () => {
       amount: 1,
       type: DamageTypeObj.Slashing,
       initiative: creature?.initiative || 0,
+      tempHp: creature?.tempHp || 0,
     },
   });
   if (!creature) return null;
@@ -126,9 +127,10 @@ export const EditCreatureForm: React.FC = () => {
           </span>
           <span className="flex flex-row gap-2 items-center">
             <Input {...register('tempHp')} type="number" label="Temp HP" />
+
             <button
               type="submit"
-              className="flex flex-row items-center max-w-min pl-4 pr-5 font-bold mt-5 text-white bg-gray-800 rounded-full h-10 hover:bg-gradient-to-l hover:from-rose-400 hover:to-pink-500"
+              className="flex flex-row items-center max-w-min pl-4 pr-5 font-bold mt-5 text-white bg-gray-800 rounded-full h-10 hover:bg-gradient-to-r hover:from-rose-400 hover:to-pink-500"
               onClick={handleSubmit(handleTempHp)}
               onMouseOver={() => setTooltip(`Set temp HP for ${creature.name}`)}
             >

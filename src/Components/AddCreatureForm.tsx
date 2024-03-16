@@ -3,7 +3,7 @@ import { Creature } from '../types';
 import { useStateStore } from '../useStateStore';
 import { Input } from './Input';
 
-export const AddCreature = () => {
+export const AddCreatureForm = () => {
   const { addInitiative, setPlayersPreset, loadPlayersPreset, setTooltip } =
     useStateStore((state) => ({
       addInitiative: state.addInitiative,
