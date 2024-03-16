@@ -36,13 +36,13 @@ const AddCreature = () => {
         <Input {...register('tempHp')} type="number" label={'Temp HP'} />
         <button
           type="submit"
-          className="px-3 font-bold mt-5 max-w-32 text-white rounded-full h-10 bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 hover:from-pink-500 hover:via-purple-500 hover:to-indigo-500 "
+          className="px-3 font-bold mt-5 max-w-32 text-white bg-gray-800 rounded-full h-10 hover:shadow-md hover:shadow-pink-500/50"
           onClick={handleSubmit(onSubmit)}
         >
           Add Creature
         </button>
         <button
-          className="hover:bg-gray-800 hover:text-white h-10 rounded-full max-w-32 text-pink-500 font-bold bg-white border-gray-800 border"
+          className="bg-white h-10 rounded-full max-w-32 text-gray-800 border-gray-800 hover:shadow-md hover:shadow-pink-500/50 border-2 font-bold "
           type="button"
           onClick={() => reset()}
         >
