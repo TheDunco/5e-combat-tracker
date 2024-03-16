@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { Form, FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { RxDoubleArrowRight } from 'react-icons/rx';
 import { Input } from './Components/Input';
 import { Creature } from './types';
 import { useStateStore } from './useStateStore';
@@ -16,6 +17,9 @@ const AddCreature = () => {
       tempHp: 0,
       maxHp: 10,
       name: 'Goblin',
+      action: false,
+      bonusAction: false,
+      reaction: false,
     },
   });
 
@@ -37,6 +41,7 @@ const AddCreature = () => {
         <Input {...register('hp')} label={'HP'} type="number" />
         <Input {...register('maxHp')} type="number" label={'Max HP'} />
         <Input {...register('tempHp')} type="number" label={'Temp HP'} />
+        {/* TODO: figure out how to do the input stuff */}
         <button
           type="submit"
           className="px-3 font-bold mt-5 max-w-32 text-white bg-gray-800 rounded-full h-10 hover:shadow-md hover:shadow-pink-500/50"
@@ -57,29 +62,41 @@ const AddCreature = () => {
 };
 
 const App = () => {
-  const { initiative, activeIndex } = useStateStore((state) => ({
+  const {
+    initiative,
+    activeIndex,
+    incrementInitiative,
+    setCreatureAction,
+    setCreatureBonusAction,
+    setCreatureReaction,
+  } = useStateStore((state) => ({
     initiative: state.initiative,
     activeIndex: state.activeIndex,
+    incrementInitiative: state.incrementInitiative,
+    setCreatureAction: state.setCreatureAction,
+    setCreatureBonusAction: state.setCreatureBonusAction,
+    setCreatureReaction: state.setCreatureReaction,
   }));
-
-  console.log(
-    `%c[App.tsx] activeIndex :>> ${activeIndex}`,
-    'color:red',
-    activeIndex
-  );
 
   return (
     <div className="size-full grid grid-cols-9 flex-col">
       <div className="max-w-md col-span-2 rounded bg-white shadow-black/20 shadow-sm w-full text-center">
         <AddCreature />
       </div>
-      <div className="col-span-3 mt-5 flex flex-col gap-5">
+      <div className="col-span-3 mt-5 ml-5 flex flex-col gap-5 max-h-screen overflow-auto">
+        <div className="flex flex-row justify-end">
+          <button onClick={() => incrementInitiative()}>
+            <RxDoubleArrowRight className="scale-x-150 scale-y-125 hover:animate-spin text-pink-500" />
+          </button>
+        </div>
         {initiative.map((creature, index) => (
           <div
             key={`${creature.name}${creature.hp}${index}`}
             className={clsx(
-              { 'border-pink-500': index === activeIndex },
-              'bg-gray-100 rounded-lg ml-5 px-3 py-4 drop-shadow-md'
+              {
+                'border border-pink-500': index === activeIndex,
+              },
+              'bg-gray-100 hover:bg-hero-texture-30 rounded-lg px-3 py-4 drop-shadow-md'
             )}
           >
             <h2 className="font-bold text-lg">{creature.name}</h2>
@@ -87,6 +104,37 @@ const App = () => {
               HP: {creature.hp}/{creature.maxHp}
             </p>
             <p>Temp HP: {creature.tempHp}</p>
+            <p className="flex flex-row gap-5">
+              <span>
+                Action:{' '}
+                <input
+                  className="accent-pink-500"
+                  type="checkbox"
+                  checked={creature.action}
+                  onClick={() => setCreatureAction(index, !creature.action)}
+                />
+              </span>
+              <span>
+                Bonus Action:{' '}
+                <input
+                  className="accent-pink-500"
+                  type="checkbox"
+                  checked={creature.bonusAction}
+                  onClick={() =>
+                    setCreatureBonusAction(index, !creature.bonusAction)
+                  }
+                />
+              </span>
+              <span>
+                Reaction:{' '}
+                <input
+                  className="accent-pink-500"
+                  type="checkbox"
+                  checked={creature.reaction}
+                  onClick={() => setCreatureReaction(index, !creature.reaction)}
+                />
+              </span>
+            </p>
           </div>
         ))}
       </div>

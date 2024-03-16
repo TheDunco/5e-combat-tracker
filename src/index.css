@@ -18,5 +18,5 @@ code {
 
 *::selection {
     @apply bg-gray-800;
-    @apply text-white
+    @apply text-white;
 }

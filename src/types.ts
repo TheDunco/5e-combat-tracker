@@ -27,4 +27,7 @@ export interface Creature {
   maxHp: number;
   tempHp: number;
   resistances: Array<DamageType>;
+  action: boolean;
+  bonusAction: boolean;
+  reaction: boolean;
 }
