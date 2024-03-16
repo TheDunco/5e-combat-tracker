@@ -18,7 +18,7 @@ export const HealthEditForm: React.FC = () => {
   const creature = initiative[activeIndex];
   const methods = useForm<Damage>({
     defaultValues: {
-      amount: 0,
+      amount: 1,
       type: DamageTypeObj.Slashing,
     },
   });

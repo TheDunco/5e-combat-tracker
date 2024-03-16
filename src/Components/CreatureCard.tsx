@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { useId } from 'react';
 import { RxCrosshair2, RxHeart } from 'react-icons/rx';
 import { Creature } from '../types';
 import { useStateStore } from '../useStateStore';
@@ -6,10 +7,14 @@ import { useStateStore } from '../useStateStore';
 const healthPercentToDescriptor = (percent: number): string => {
   switch (true) {
     case percent === 100:
+      return 'Mint';
+    case percent < 100 && percent >= 90:
       return 'Healthy';
-    case percent < 100 && percent >= 75:
+    case percent < 90 && percent >= 80:
       return 'Bruised';
-    case percent < 75 && percent >= 50:
+    case percent < 80 && percent >= 70:
+      return 'Injured';
+    case percent < 70 && percent >= 50:
       return 'Hurt';
     case percent < 50 && percent >= 25:
       return 'Bloodied';
@@ -45,6 +50,9 @@ export const CreatureCard: React.FC<{ creature: Creature; index: number }> = ({
   const healthPercent = Math.round(
     (creatureTotalHealth * 100) / creature.maxHp
   );
+  const actionId = useId();
+  const bonusActionId = useId();
+  const reactionId = useId();
   return (
     <div className="@container">
       <div
@@ -75,22 +83,26 @@ export const CreatureCard: React.FC<{ creature: Creature; index: number }> = ({
           <RxCrosshair2 /> {creature.ac}
         </p>
         <p className="flex flex-col @sm:flex-col @sm:gap-2 @md:flex-row @md:gap-5">
-          <span className="flex flex-row items-center gap-1">
-            <label htmlFor="action">Action </label>
+          <span className="flex flex-row items-center gap-1 cursor-pointer">
+            <label htmlFor={actionId} className="cursor-pointer">
+              Action{' '}
+            </label>
             <input
-              id="action"
-              className="accent-pink-500"
+              id={actionId}
+              className="accent-pink-500 cursor-pointer"
               type="checkbox"
               checked={creature.action}
               onChange={() => setCreatureAction(index, !creature.action)}
               disabled={index !== activeIndex}
             />
           </span>
-          <span className="flex flex-row items-center gap-1">
-            <label htmlFor="bonus-action">Bonus Action </label>
+          <span className="flex flex-row items-center gap-1 cursor-pointer">
+            <label htmlFor={bonusActionId} className="cursor-pointer">
+              Bonus Action{' '}
+            </label>
             <input
-              id="bonus-action"
-              className="accent-pink-500"
+              id={bonusActionId}
+              className="accent-pink-500 cursor-pointer"
               type="checkbox"
               checked={creature.bonusAction}
               onChange={() =>
@@ -99,11 +111,11 @@ export const CreatureCard: React.FC<{ creature: Creature; index: number }> = ({
               disabled={index !== activeIndex}
             />
           </span>
-          <span className="flex flex-row items-center gap-1">
-            <label htmlFor="reaction">Reaction </label>
+          <span className="flex flex-row items-center gap-1 className='cursor-pointer'">
+            <label htmlFor={reactionId}>Reaction </label>
             <input
-              id="reaction"
-              className="accent-pink-500"
+              id={reactionId}
+              className="accent-pink-500 cursor-pointer"
               type="checkbox"
               checked={creature.reaction}
               onChange={() => setCreatureReaction(index, !creature.reaction)}

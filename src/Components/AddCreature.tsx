@@ -53,7 +53,7 @@ export const AddCreature = () => {
           {...register('enemy')}
           type="checkbox"
           label={'Enemy?'}
-          className="accent-pink-500 place-self-start flex"
+          className="accent-pink-500 place-self-start flex size-8 rounded-full"
         />
         <button
           type="submit"
