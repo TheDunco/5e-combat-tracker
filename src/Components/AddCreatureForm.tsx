@@ -3,7 +3,8 @@ import { Form, FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { MultiSelect } from 'react-multi-select-component';
 import { Creature, DamageTypeObj, DamageTypeSelectOptions } from '../types';
 import { useStateStore } from '../useStateStore';
-import { Input } from './Input';
+import { Button } from './UI/Button';
+import { Input } from './UI/Input';
 
 export const AddCreatureForm = () => {
   const {
@@ -78,18 +79,16 @@ export const AddCreatureForm = () => {
   return (
     <FormProvider {...methods}>
       <Form className="p-3 gap-4 flex flex-col">
-        <button
-          className="px-4 bg-white h-10 rounded-full text-gray-800 border-gray-800 hover:shadow-md hover:shadow-pink-500/50 border-2 font-bold "
+        <Button
           type="button"
           onClick={() => loadInCharacter()}
-          onMouseOver={() =>
-            setTooltip(
-              'Load the current character into the form for editing. Useful for updating characters in the initiative order if you delete the previous one'
-            )
+          variant="secondary"
+          tooltip={
+            'Load the current character into the form for editing. Useful for updating characters in the initiative order if you delete the previous one'
           }
         >
           Load Current Character
-        </button>
+        </Button>
         <Input
           {...register('name', { required: 'Name required' })}
           label={'Name'}
@@ -140,35 +139,32 @@ export const AddCreatureForm = () => {
           labelledBy="Resistances"
           className="outline-none"
         />
-        <button
+        <Button
           type="submit"
-          className="px-4 font-bold mt-5 text-white bg-gray-800 rounded-full h-10 hover:shadow-md hover:shadow-pink-500/50"
           onClick={handleSubmit(onSubmit)}
-          onMouseOver={() => setTooltip(`Add ${name} to initiative order`)}
+          tooltip={`Add ${name} to initiative order`}
         >
           Add Creature
-        </button>
+        </Button>
         <hr className="border-gray-800" />
-        <button
-          className="px-4 bg-white h-10 rounded-full text-gray-800 border-gray-800 hover:shadow-md hover:shadow-pink-500/50 border-2 font-bold "
+        <Button
           type="button"
           onClick={() => setPlayersPreset()}
-          onMouseOver={() =>
-            setTooltip(
-              'Save the current initiative order as a preset. Useful for saving players'
-            )
+          variant="secondary"
+          tooltip={
+            'Save the current initiative order as a preset. Useful for saving players'
           }
         >
           Save as Preset
-        </button>
-        <button
-          className="px-4 bg-white h-10 rounded-full text-gray-800 border-gray-800 hover:shadow-md hover:shadow-pink-500/50 border-2 font-bold "
+        </Button>
+        <Button
           type="button"
           onClick={() => loadPlayersPreset()}
-          onMouseOver={() => setTooltip('Load the last saved preset')}
+          variant="secondary"
+          tooltip={'Load the last saved preset'}
         >
           Load Preset
-        </button>
+        </Button>
       </Form>
     </FormProvider>
   );

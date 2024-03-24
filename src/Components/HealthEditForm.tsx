@@ -4,7 +4,8 @@ import { RxArrowDown, RxArrowUp } from 'react-icons/rx';
 import { Creature, Damage, DamageTypeObj } from '../types';
 import { useStateStore } from '../useStateStore';
 import { CreatureCard } from './CreatureCard';
-import { Input } from './Input';
+import { Button } from './UI/Button';
+import { Input } from './UI/Input';
 
 type EditCreatureFormType = Damage & Pick<Creature, 'initiative' | 'tempHp'>;
 
@@ -15,7 +16,6 @@ export const EditCreatureForm: React.FC = () => {
     creatureDamage,
     creatureHeal,
     setCreatureInitiative,
-    setTooltip,
     setCreatureTempHp,
   } = useStateStore((state) => ({
     activeIndex: state.activeIndex,
@@ -23,7 +23,6 @@ export const EditCreatureForm: React.FC = () => {
     creatureDamage: state.creatureDamage,
     creatureHeal: state.creatureHeal,
     setCreatureInitiative: state.setCreatureInitiative,
-    setTooltip: state.setTooltip,
     setCreatureTempHp: state.setCreatureTempHp,
   }));
 
@@ -94,24 +93,24 @@ export const EditCreatureForm: React.FC = () => {
             </span>
           </span>
           <span className="flex-col @xs:flex-row flex gap-0 @xs:gap-2 mb-4">
-            <button
+            <Button
               type="submit"
-              className="flex flex-row items-center max-w-min pl-4 pr-5 font-bold text-white bg-gray-800 hover:bg-gradient-to-r hover:from-emerald-400 hover:to-green-500 rounded-full h-10"
               onClick={handleSubmit(onSubmitHeal)}
-              onMouseOver={() => setTooltip(`Heal the creature ${amount} HP`)}
+              variant="heal"
+              tooltip={`Heal the creature ${amount} HP`}
             >
               <RxArrowUp />
               Heal
-            </button>
-            <button
+            </Button>
+            <Button
               type="submit"
-              className="flex flex-row items-center max-w-min pl-4 pr-5 font-bold text-white bg-gray-800 rounded-full h-10 hover:bg-gradient-to-l hover:from-pink-500 hover:to-rose-500"
               onClick={handleSubmit(onSubmitDamage)}
-              onMouseOver={() => setTooltip(`Damage the creature ${amount} HP`)}
+              variant="damage"
+              tooltip={`Damage the creature ${amount} HP`}
             >
               <RxArrowDown />
               Damage
-            </button>
+            </Button>
           </span>
           <span className="flex flex-row gap-2 items-center">
             <Input
@@ -119,28 +118,28 @@ export const EditCreatureForm: React.FC = () => {
               type="number"
               label="Initiative"
             />
-            <button
+            <Button
               type="submit"
-              className="mt-6 flex flex-row items-center px-4 bg-white h-10 rounded-full text-gray-800 border-gray-800 hover:shadow-md hover:shadow-pink-500/50 border-2 font-bold "
               onClick={handleSubmit(handleInitiative)}
-              onMouseOver={() =>
-                setTooltip(`Set the initiative order of ${creature.name}`)
-              }
+              tooltip={`Set the initiative order of ${creature.name}`}
+              variant="secondary"
+              className="mt-6"
             >
               Set
-            </button>
+            </Button>
           </span>
           <span className="flex flex-row gap-2 items-center">
             <Input {...register('tempHp')} type="number" label="Temp HP" />
 
-            <button
+            <Button
               type="submit"
-              className="mt-6 px-4 bg-white h-10 rounded-full text-gray-800 border-gray-800 hover:shadow-md hover:shadow-pink-500/50 border-2 font-bold "
               onClick={handleSubmit(handleTempHp)}
-              onMouseOver={() => setTooltip(`Set temp HP for ${creature.name}`)}
+              tooltip={`Set temp HP for ${creature.name}`}
+              variant="secondary"
+              className="mt-6"
             >
               Set
-            </button>
+            </Button>
           </span>
         </Form>
       </FormProvider>
