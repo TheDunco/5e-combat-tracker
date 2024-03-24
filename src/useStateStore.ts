@@ -57,21 +57,22 @@ export const useStateStore = create<UseStateStore>()(
       },
       incrementInitiative: () => {
         set((state) => {
-          const newActiveIndex = state.activeIndex + 1;
+          let newActiveIndex = state.activeIndex + 1;
           if (newActiveIndex >= state.initiative.length) {
-            const newInitiative = state.initiative
-              .map((creature) => {
-                return {
-                  ...creature,
-                  action: false,
-                  bonusAction: false,
-                  reaction: false,
-                };
-              })
-              .sort((a, b) => b.initiative - a.initiative);
-            return { activeIndex: 0, initiative: newInitiative };
+            newActiveIndex = 0;
           }
-          return { activeIndex: newActiveIndex };
+          const newInitiative = state.initiative.map((creature, i) => {
+            if (i === newActiveIndex) {
+              return {
+                ...creature,
+                action: false,
+                bonusAction: false,
+                reaction: false,
+              };
+            }
+            return creature;
+          });
+          return { activeIndex: newActiveIndex, initiative: newInitiative };
         });
       },
       setCreatureAction: (index: number, action: boolean) => {

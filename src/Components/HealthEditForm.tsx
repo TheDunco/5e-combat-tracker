@@ -93,10 +93,10 @@ export const EditCreatureForm: React.FC = () => {
               </select>
             </span>
           </span>
-          <span className="flex-col @xs:flex-row flex gap-0 @xs:gap-2">
+          <span className="flex-col @xs:flex-row flex gap-0 @xs:gap-2 mb-4">
             <button
               type="submit"
-              className="flex flex-row items-center max-w-min pl-4 pr-5 font-bold mt-5 text-white bg-gray-800 hover:bg-gradient-to-r hover:from-emerald-400 hover:to-green-500 rounded-full h-10"
+              className="flex flex-row items-center max-w-min pl-4 pr-5 font-bold text-white bg-gray-800 hover:bg-gradient-to-r hover:from-emerald-400 hover:to-green-500 rounded-full h-10"
               onClick={handleSubmit(onSubmitHeal)}
               onMouseOver={() => setTooltip(`Heal the creature ${amount} HP`)}
             >
@@ -105,7 +105,7 @@ export const EditCreatureForm: React.FC = () => {
             </button>
             <button
               type="submit"
-              className="flex flex-row items-center max-w-min pl-4 pr-5 font-bold mt-5 text-white bg-gray-800 rounded-full h-10 hover:bg-gradient-to-l hover:from-rose-400 hover:to-red-500"
+              className="flex flex-row items-center max-w-min pl-4 pr-5 font-bold text-white bg-gray-800 rounded-full h-10 hover:bg-gradient-to-l hover:from-pink-500 hover:to-rose-500"
               onClick={handleSubmit(onSubmitDamage)}
               onMouseOver={() => setTooltip(`Damage the creature ${amount} HP`)}
             >
@@ -121,7 +121,7 @@ export const EditCreatureForm: React.FC = () => {
             />
             <button
               type="submit"
-              className="flex flex-row items-center max-w-min pl-4 pr-5 font-bold mt-5 text-white bg-gray-800 rounded-full h-10 hover:bg-gradient-to-l hover:from-rose-400 hover:to-pink-500"
+              className="mt-6 flex flex-row items-center px-4 bg-white h-10 rounded-full text-gray-800 border-gray-800 hover:shadow-md hover:shadow-pink-500/50 border-2 font-bold "
               onClick={handleSubmit(handleInitiative)}
               onMouseOver={() =>
                 setTooltip(`Set the initiative order of ${creature.name}`)
@@ -135,7 +135,7 @@ export const EditCreatureForm: React.FC = () => {
 
             <button
               type="submit"
-              className="flex flex-row items-center max-w-min pl-4 pr-5 font-bold mt-5 text-white bg-gray-800 rounded-full h-10 hover:bg-gradient-to-r hover:from-rose-400 hover:to-pink-500"
+              className="mt-6 px-4 bg-white h-10 rounded-full text-gray-800 border-gray-800 hover:shadow-md hover:shadow-pink-500/50 border-2 font-bold "
               onClick={handleSubmit(handleTempHp)}
               onMouseOver={() => setTooltip(`Set temp HP for ${creature.name}`)}
             >

@@ -159,15 +159,15 @@ export const AddCreatureForm = () => {
             )
           }
         >
-          Save as Players Preset
+          Save as Preset
         </button>
         <button
           className="px-4 bg-white h-10 rounded-full text-gray-800 border-gray-800 hover:shadow-md hover:shadow-pink-500/50 border-2 font-bold "
           type="button"
           onClick={() => loadPlayersPreset()}
-          onMouseOver={() => setTooltip('Load the players preset')}
+          onMouseOver={() => setTooltip('Load the last saved preset')}
         >
-          Load Players Preset
+          Load Preset
         </button>
       </Form>
     </FormProvider>
