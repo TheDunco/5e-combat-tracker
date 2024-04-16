@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { useId } from "react";
+import { useEffect, useId, useRef } from "react";
 import { RxCross1, RxCrosshair2, RxHeart } from "react-icons/rx";
 import { Creature } from "../types";
 import { useStateStore } from "../useStateStore";
@@ -43,6 +43,7 @@ export const CreatureCard: React.FC<{
         setCreatureReaction,
         setTooltip,
         removeCreature,
+        setActiveCharacterCardRef,
     } = useStateStore((state) => ({
         activeIndex: state.activeIndex,
         setCreatureAction: state.setCreatureAction,
@@ -50,16 +51,29 @@ export const CreatureCard: React.FC<{
         setCreatureReaction: state.setCreatureReaction,
         setTooltip: state.setTooltip,
         removeCreature: state.removeCreature,
+        setActiveCharacterCardRef: state.setActiveCharacterCardRef,
     }));
     const creatureTotalHealth = +creature.hp + +creature.tempHp;
     const healthPercent = Math.round(
         (creatureTotalHealth * 100) / creature.maxHp
     );
+
+    const myRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (index === activeIndex && myRef.current) {
+            myRef.current.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+            });
+        }
+    }, [activeIndex, index]);
+
     const actionId = useId();
     const bonusActionId = useId();
     const reactionId = useId();
     return (
-        <div className="@container">
+        <div ref={myRef} className="@container">
             <div
                 className={clsx(
                     "bg-gray-100 hover:bg-hero-texture-30 rounded-lg px-3 py-4 drop-shadow-md flex flex-col gap-1",

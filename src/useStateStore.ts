@@ -22,6 +22,8 @@ interface UseStateStore {
     tooltip: string;
     setTooltip: (tooltip: string) => void;
     removeCreature: (index: number) => void;
+    activeCharacterCardRef: React.RefObject<HTMLDivElement> | null;
+    setActiveCharacterCardRef: (ref: React.RefObject<HTMLDivElement>) => void;
 }
 
 export const useStateStore = create<UseStateStore>()(
@@ -224,6 +226,12 @@ export const useStateStore = create<UseStateStore>()(
                     return { initiative: newInitiative };
                 });
             },
+            setActiveCharacterCardRef: (
+                ref: React.RefObject<HTMLDivElement>
+            ) => {
+                set({ activeCharacterCardRef: ref });
+            },
+            activeCharacterCardRef: null,
         }),
         { name: "combat-state", storage: createJSONStorage(() => localStorage) }
     )

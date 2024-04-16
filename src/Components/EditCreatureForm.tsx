@@ -64,7 +64,7 @@ export const EditCreatureForm: React.FC = () => {
 
     return (
         <>
-            <div className="p-3">
+            <div className="p-3 hidden md:block">
                 <CreatureCard
                     creature={creature}
                     index={activeIndex}

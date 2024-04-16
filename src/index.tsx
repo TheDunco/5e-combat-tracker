@@ -8,7 +8,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
     <React.StrictMode>
-        <div className="size-full h-screen bg-gray-200">
+        <div className="size-full h-screen bg-neutral-100">
             <App />
         </div>
     </React.StrictMode>

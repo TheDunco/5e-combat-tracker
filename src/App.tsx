@@ -1,7 +1,7 @@
 import { RxDoubleArrowRight, RxReset } from "react-icons/rx";
 import { AddCreatureForm } from "./Components/AddCreatureForm";
 import { CreatureCard } from "./Components/CreatureCard";
-import { EditCreatureForm } from "./Components/HealthEditForm";
+import { EditCreatureForm } from "./Components/EditCreatureForm";
 import { useStateStore } from "./useStateStore";
 
 const App = () => {
@@ -15,12 +15,12 @@ const App = () => {
         }));
 
     return (
-        <div className="size-full grid grid-cols-9 flex-col">
-            <div className="max-w-md col-span-2 rounded bg-white shadow-black/20 shadow-sm w-full text-center">
+        <div className="size-full flex-row md:grid md:grid-cols-9">
+            <div className="col-span-2 rounded md:bg-white shadow-black/20 shadow-sm w-full text-center">
                 <AddCreatureForm />
             </div>
             <div className="col-span-4 m-5 mr-0 pr-5 flex flex-col gap-5 max-h-screen overflow-auto">
-                <div className="flex flex-row justify-end gap-5">
+                <div className="flex flex-row justify-end gap-5 sticky top-0 z-10  bg-neutral-100/5 backdrop-blur-sm">
                     <p>{tooltip}</p>
                     <button
                         className="bg-gray-800 rounded-full h-8 p-2 px-4 hover:shadow-md hover:shadow-pink-500/50"
@@ -51,7 +51,7 @@ const App = () => {
                     />
                 ))}
             </div>
-            <div className="col-span-3 bg-hero-diagonal-lines-10">
+            <div className="bg-transparent col-span-3 bg-hero-diagonal-lines-10">
                 <EditCreatureForm />
             </div>
         </div>
