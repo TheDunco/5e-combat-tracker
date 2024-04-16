@@ -43,7 +43,6 @@ export const CreatureCard: React.FC<{
         setCreatureReaction,
         setTooltip,
         removeCreature,
-        setActiveCharacterCardRef,
     } = useStateStore((state) => ({
         activeIndex: state.activeIndex,
         setCreatureAction: state.setCreatureAction,
@@ -51,7 +50,6 @@ export const CreatureCard: React.FC<{
         setCreatureReaction: state.setCreatureReaction,
         setTooltip: state.setTooltip,
         removeCreature: state.removeCreature,
-        setActiveCharacterCardRef: state.setActiveCharacterCardRef,
     }));
     const creatureTotalHealth = +creature.hp + +creature.tempHp;
     const healthPercent = Math.round(
