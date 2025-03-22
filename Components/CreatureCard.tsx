@@ -156,7 +156,7 @@ export const CreatureCard: React.FC<{
             onMouseOver={() =>
               setTooltip("Use the creature's reaction for this round")
             }
-            className="flex flex-row items-center gap-1 className='cursor-pointer'"
+            className="flex flex-row items-center gap-1"
           >
             <label htmlFor={reactionId}>Reaction </label>
             <input
