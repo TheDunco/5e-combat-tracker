@@ -2,35 +2,32 @@
   "name": "5e-combat-tracker",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "bun@1.0.31",
+  "type": "module",
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.5",
     "@tailwindcss/container-queries": "^0.1.1",
+    "@tanstack/react-router": "^1.114.27",
+    "@tanstack/react-start": "^1.114.27",
     "@types/node": "^16.18.89",
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.4",
+    "autoprefixer": "^10.4.21",
     "clsx": "^2.1.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "postcss": "8.5.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-hook-form": "^7.51.0",
     "react-icons": "^5.0.1",
     "react-multi-select-component": "^4.3.4",
-    "react-scripts": "5.0.1",
     "tailwind-heropatterns": "^0.0.8",
-    "typescript": "^4.9.5",
+    "typescript": "^5.8.2",
+    "vinxi": "^0.5.3",
     "zustand": "^4.5.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "dev": "vinxi dev",
+    "build": "vinxi build $@",
+    "start": "vinxi start"
   },
   "browserslist": {
     "production": [
@@ -46,6 +43,9 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "tailwindcss": "^3.4.1"
-  }
+    "@vitejs/plugin-react": "^4.3.4",
+    "tailwindcss": "^3.4.1",
+    "vite-tsconfig-paths": "^5.1.4"
+  },
+  "packageManager": "pnpm@8.10.5+sha512.9c161f433d85551c58f1b3a10b18cc3df72b5a02d2caee6566cc05b6f20addef947e795d90c39033bf92de55177ead69d87f62a9daadc91e7a2e3b58f49353a0"
 }

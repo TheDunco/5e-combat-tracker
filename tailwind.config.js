@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+const config = {
+  content: ['./**/**/*.{js,jsx,ts,tsx}'],
+  darkMode: ['class'],
   plugins: [
     require('@tailwindcss/container-queries'),
     require('tailwind-heropatterns')({
@@ -33,3 +34,5 @@ module.exports = {
     }),
   ],
 };
+
+export default config;
