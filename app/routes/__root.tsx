@@ -5,7 +5,6 @@ import {
   HeadContent,
   Scripts,
 } from '@tanstack/react-router';
-import '../../app.css';
 import appCss from '../../app.css?url';
 
 export const Route = createRootRoute({
@@ -21,6 +20,9 @@ export const Route = createRootRoute({
       {
         title: 'Combat Tracker',
       },
+      ,
+    ],
+    links: [
       {
         rel: 'stylesheet',
         type: 'text/css',
