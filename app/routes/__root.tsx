@@ -5,8 +5,8 @@ import {
   HeadContent,
   Scripts,
 } from '@tanstack/react-router';
-import indexCss from '../../index.css?url';
-import '../../index.css';
+import '../../app.css';
+import appCss from '../../app.css?url';
 
 export const Route = createRootRoute({
   head: () => ({
@@ -24,7 +24,7 @@ export const Route = createRootRoute({
       {
         rel: 'stylesheet',
         type: 'text/css',
-        href: indexCss,
+        href: appCss,
       },
     ],
   }),
