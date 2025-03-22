@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 const config = {
-  content: ['./app/*.{js,jsx,ts,tsx}'],
+  content: ['./app/**/*.{js,jsx,ts,tsx}', './Components/**/*.{js,jsx,ts,tsx}'],
   darkMode: ['class'],
   plugins: [
     require('@tailwindcss/container-queries'),

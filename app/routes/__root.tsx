@@ -6,6 +6,7 @@ import {
   Scripts,
 } from '@tanstack/react-router';
 import indexCss from '../../index.css?url';
+import '../../index.css';
 
 export const Route = createRootRoute({
   head: () => ({
