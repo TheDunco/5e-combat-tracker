@@ -1,4 +1,4 @@
 [build]
 command = "bun run build"
 functions = "netlify/functions"
-publish = "build"
+publish = "dist"
