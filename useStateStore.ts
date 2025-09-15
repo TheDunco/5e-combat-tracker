@@ -9,6 +9,10 @@ interface UseStateStore {
   loadPlayersPreset: () => void;
   activeIndex: number;
   setActiveIndex: (index: number) => void;
+  editIndex: number;
+  setEditIndex: (index: number) => void;
+  loadCreatureIntoForm: (c: Creature) => void;
+  setLoadCreatureIntoForm: (setLoad: (c: Creature) => void) => void;
   addInitiative: (creature: Creature) => void;
   reset: () => void;
   incrementInitiative: () => void;
@@ -41,9 +45,18 @@ export const useStateStore = create<UseStateStore>()(
           initiative: state.playersPreset,
         }));
       },
+      setLoadCreatureIntoForm: (setLoad) =>
+        set({ loadCreatureIntoForm: setLoad }),
+      loadCreatureIntoForm: (c) => {
+        console.log(c);
+      },
       activeIndex: 0,
       setActiveIndex: (index: number) => {
         set({ activeIndex: index });
+      },
+      editIndex: 0,
+      setEditIndex: (index: number) => {
+        set({ editIndex: index });
       },
       addInitiative: (creature: Creature) => {
         set((state) => {
@@ -77,6 +90,7 @@ export const useStateStore = create<UseStateStore>()(
           return {
             activeIndex: newActiveIndex,
             initiative: newInitiative,
+            editIndex: newActiveIndex,
           };
         });
       },

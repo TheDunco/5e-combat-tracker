@@ -1,33 +1,39 @@
-import clsx from 'clsx';
-import { useEffect, useId, useRef } from 'react';
-import { RxCross1, RxCrosshair2, RxHeart } from 'react-icons/rx';
-import { Creature } from '../types';
-import { useStateStore } from '../useStateStore';
+import clsx from "clsx";
+import { useEffect, useId, useRef } from "react";
+import {
+  RxCross1,
+  RxCrosshair2,
+  RxHeart,
+  RxPencil1,
+  RxPlus,
+} from "react-icons/rx";
+import { Creature } from "../types";
+import { useStateStore } from "../useStateStore";
 
 const healthPercentToDescriptor = (percent: number): string => {
   switch (true) {
     case percent === 100:
-      return 'Full Health';
+      return "Full Health";
     case percent < 100 && percent >= 90:
-      return 'Healthy';
+      return "Healthy";
     case percent < 90 && percent >= 80:
-      return 'Bruised';
+      return "Bruised";
     case percent < 80 && percent >= 70:
-      return 'Injured';
+      return "Injured";
     case percent < 70 && percent >= 50:
-      return 'Hurt';
+      return "Hurt";
     case percent < 50 && percent >= 25:
-      return 'Bloodied';
+      return "Bloodied";
     case percent < 25 && percent >= 10:
-      return 'Haggard';
+      return "Haggard";
     case percent < 10 && percent >= 5:
-      return 'Critical';
+      return "Critical";
     case percent < 5 && percent > 0:
       return "Death's Door";
     case percent <= 0:
-      return 'Unconscious';
+      return "Unconscious";
     default:
-      return 'Healthy';
+      return "Healthy";
   }
 };
 
@@ -43,6 +49,9 @@ export const CreatureCard: React.FC<{
     setCreatureReaction,
     setTooltip,
     removeCreature,
+    setEditIndex,
+    editIndex,
+    loadCreatureIntoForm,
   } = useStateStore((state) => ({
     activeIndex: state.activeIndex,
     setCreatureAction: state.setCreatureAction,
@@ -50,19 +59,22 @@ export const CreatureCard: React.FC<{
     setCreatureReaction: state.setCreatureReaction,
     setTooltip: state.setTooltip,
     removeCreature: state.removeCreature,
+    setEditIndex: state.setEditIndex,
+    editIndex: state.editIndex,
+    loadCreatureIntoForm: state.loadCreatureIntoForm,
   }));
   const creatureTotalHealth = +creature.hp + +creature.tempHp;
   const healthPercent = Math.round(
-    (creatureTotalHealth * 100) / creature.maxHp
+    (creatureTotalHealth * 100) / creature.maxHp,
   );
 
-  const myRef = useRef<HTMLDivElement>(null);
+  const myRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (index === activeIndex && myRef.current) {
       myRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
+        behavior: "smooth",
+        block: "center",
       });
     }
   }, [activeIndex, index]);
@@ -71,17 +83,32 @@ export const CreatureCard: React.FC<{
   const bonusActionId = useId();
   const reactionId = useId();
   return (
-    <div ref={myRef} className="@container">
+    <button
+      ref={myRef}
+      className="@container text-left w-full"
+      onClick={() => setEditIndex(index)}
+      onMouseEnter={() => setTooltip("Click the creature to edit")}
+    >
       <div
         className={clsx(
-          'bg-gray-100 hover:bg-hero-texture-30 rounded-lg px-3 py-4 drop-shadow-md flex flex-col gap-1',
+          "bg-gray-100 ml-1 rounded-lg px-3 py-4 drop-shadow-md flex flex-col gap-1",
+          index === editIndex
+            ? "hover:bg-hero-floating-cogs-10"
+            : "hover:bg-hero-texture-30",
           {
-            'border-2 border-pink-500': index === activeIndex && !sidebar,
-            'bg-hero-skulls-10 hover:bg-hero-skulls-pink-30': creature.hp <= 0,
-            'text-pink-950': creature.enemy,
-          }
+            "ring-2 ring-pink-500": index === activeIndex,
+            "bg-hero-skulls-10 hover:bg-hero-skulls-pink-30": creature.hp <= 0,
+            "text-pink-950": creature.enemy,
+          },
         )}
       >
+        <button
+          onMouseOver={() => setTooltip(`Load ${creature.name} into form`)}
+          onClick={() => loadCreatureIntoForm(creature)}
+          className="absolute top-1.5 left-[calc(100%-4rem)] hover:bg-gray-800 hover:shadow-md hover:shadow-pink-500/50 group rounded-full p-1"
+        >
+          <RxPlus className="text-pink-500 group-hover:text-white" />
+        </button>
         <button
           onMouseOver={() =>
             setTooltip(`Remove ${creature.name} from initiative`)
@@ -89,7 +116,22 @@ export const CreatureCard: React.FC<{
           onClick={() => {
             // eslint-disable-next-line no-restricted-globals
             const confirmed = confirm(
-              `Are you sure you want to remove ${creature.name} from initiative?`
+              `Are you sure you want to remove ${creature.name} from initiative?`,
+            );
+            if (confirmed) removeCreature(index);
+          }}
+          className="absolute top-1.5 left-[calc(100%-2rem)] hover:bg-gray-800 hover:shadow-md hover:shadow-pink-500/50 group rounded-full p-1"
+        >
+          <RxCross1 className="text-pink-500 group-hover:text-white" />
+        </button>
+        <button
+          onMouseOver={() =>
+            setTooltip(`Remove ${creature.name} from initiative`)
+          }
+          onClick={() => {
+            // eslint-disable-next-line no-restricted-globals
+            const confirmed = confirm(
+              `Are you sure you want to remove ${creature.name} from initiative?`,
             );
             if (confirmed) removeCreature(index);
           }}
@@ -98,12 +140,12 @@ export const CreatureCard: React.FC<{
           <RxCross1 className="text-pink-500 group-hover:text-white" />
         </button>
         <h2 className="font-bold text-lg">
-          [{creature.initiative}] {creature.name}{' '}
+          [{creature.initiative}] {creature.name}{" "}
         </h2>
         <p className="flex flex-row items-center">
           <RxHeart className="text-pink-500 mr-2" />
           <span className="font-bold">{creature.hp}</span>
-          {creature.tempHp > 0 ? `\x07(+${creature.tempHp})` : ''}/
+          {creature.tempHp > 0 ? `\x07(+${creature.tempHp})` : ""}/
           <span className="font-medium">{creature.maxHp}</span>
           <span className="font-light">&nbsp;({healthPercent}%)</span>
           <span className="text-sm italic ml-1">
@@ -121,7 +163,7 @@ export const CreatureCard: React.FC<{
             className="flex flex-row items-center gap-1 cursor-pointer"
           >
             <label htmlFor={actionId} className="cursor-pointer">
-              Action{' '}
+              Action{" "}
             </label>
             <input
               id={actionId}
@@ -139,7 +181,7 @@ export const CreatureCard: React.FC<{
             className="flex flex-row items-center gap-1 cursor-pointer"
           >
             <label htmlFor={bonusActionId} className="cursor-pointer">
-              Bonus Action{' '}
+              Bonus Action{" "}
             </label>
             <input
               id={bonusActionId}
@@ -199,6 +241,6 @@ export const CreatureCard: React.FC<{
           </div>
         ) : null}
       </div>
-    </div>
+    </button>
   );
 };
