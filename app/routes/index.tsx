@@ -1,11 +1,11 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { RxDoubleArrowRight, RxReset } from 'react-icons/rx';
-import { AddCreatureForm } from '../../Components/AddCreatureForm';
-import { CreatureCard } from '../../Components/CreatureCard';
-import { EditCreatureForm } from '../../Components/EditCreatureForm';
-import { useStateStore } from '../../useStateStore';
+import { createFileRoute } from "@tanstack/react-router";
+import { RxDoubleArrowRight, RxReset } from "react-icons/rx";
+import { AddCreatureForm } from "../../Components/AddCreatureForm";
+import { CreatureCard } from "../../Components/CreatureCard";
+import { EditCreatureForm } from "../../Components/EditCreatureForm";
+import { useStateStore } from "../../useStateStore";
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute("/")({
   component: Home,
 });
 
@@ -31,17 +31,17 @@ function Home() {
             className="bg-gray-800 rounded-full h-8 p-2 px-4 hover:shadow-md hover:shadow-pink-500/50"
             onClick={() => {
               // eslint-disable-next-line no-restricted-globals
-              const confirmed = confirm('Are you sure you want to reset?');
+              const confirmed = confirm("Are you sure you want to reset?");
               if (confirmed) reset();
             }}
-            onMouseOver={() => setTooltip('Reset app state')}
+            onMouseOver={() => setTooltip("Reset app state")}
           >
             <RxReset className="scale-x-150 scale-y-125 text-white" />
           </button>
           <button
             className="bg-gray-800 rounded-full h-8 p-2 px-4 hover:shadow-md hover:shadow-pink-500/50"
             onClick={() => incrementInitiative()}
-            onMouseOver={() => setTooltip('Increment initiative')}
+            onMouseOver={() => setTooltip("Next initiative")}
           >
             <RxDoubleArrowRight className="scale-x-150 scale-y-125 text-white" />
           </button>

@@ -1,6 +1,6 @@
-import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
-import { Creature, Damage } from './types';
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
+import { Creature, Damage } from "./types";
 
 interface UseStateStore {
   initiative: Array<Creature>;
@@ -49,7 +49,7 @@ export const useStateStore = create<UseStateStore>()(
         set((state) => {
           return {
             initiative: [...state.initiative, creature].sort(
-              (a, b) => b.initiative - a.initiative
+              (a, b) => b.initiative - a.initiative,
             ),
           };
         });
@@ -182,7 +182,7 @@ export const useStateStore = create<UseStateStore>()(
           return { initiative: newInitiative };
         });
       },
-      tooltip: 'Welcome!',
+      tooltip: 'Welcome! Click "Add Creature" to start',
       setTooltip: (tooltip: string) => {
         set({ tooltip });
       },
@@ -208,6 +208,6 @@ export const useStateStore = create<UseStateStore>()(
       },
       activeCharacterCardRef: null,
     }),
-    { name: 'combat-state', storage: createJSONStorage(() => localStorage) }
-  )
+    { name: "combat-state", storage: createJSONStorage(() => localStorage) },
+  ),
 );
